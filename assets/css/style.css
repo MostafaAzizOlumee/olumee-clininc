@@ -1,0 +1,361 @@
+:root {
+    /* Palette: Sky Blue & Cloud White */
+    --main-bg: #f0f9ff; /* Lightest blue tint */
+    --sidebar-bg: #ffffff;
+    
+    /* Blue Shades */
+    --primary-accent: #0ea5e9; /* Sky Blue */
+    --primary-dark: #0284c7;
+    --secondary-accent: #38bdf8; 
+    
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    --card-radius: 20px;
+    --soft-shadow: 0 10px 40px -10px rgba(14, 165, 233, 0.12);
+    --sidebar-width: 260px;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: var(--main-bg);
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* --- Sidebar --- */
+#wrapper { display: flex; width: 100%; transition: all 0.3s ease; }
+
+/* When toggled: Hide sidebar by moving it right, and remove content margin */
+#wrapper.toggled #sidebar-wrapper {
+    margin-right: calc(var(--sidebar-width) * -1);
+}
+
+#wrapper.toggled #page-content-wrapper {
+    margin-right: 0;
+}
+
+/* Sidebar is fixed on the right */
+#sidebar-wrapper {
+    width: var(--sidebar-width);
+    position: fixed;
+    right: 0; /* Align to right for RTL */
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    transition: margin 0.3s ease-in-out;
+    background: var(--sidebar-bg);
+    box-shadow: var(--soft-shadow);
+}
+
+.sidebar-brand {
+    padding: 2rem 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-accent);
+    display: flex;
+    align-items: center;
+}
+/* Sidebar Sub-menu Styling */
+#sidebar-wrapper .collapse .list-group-item {
+    font-size: 0.85rem;
+    padding: 8px 45px 8px 20px; /* Adjust right padding for RTL nesting */
+    margin: 2px 15px;
+    background: transparent;
+    color: var(--text-muted);
+}
+
+#sidebar-wrapper .collapse .list-group-item:hover {
+    color: var(--primary-accent);
+    background: #f8fafc;
+}
+
+/* Arrow Animation */
+.menu-arrow {
+    transition: transform 0.3s ease;
+    font-size: 0.7rem;
+}
+
+[aria-expanded="true"] .menu-arrow {
+    transform: rotate(180deg);
+    color: var(--primary-accent);
+}
+
+/* Ensure parent remains stylish when open */
+[aria-expanded="true"].list-group-item {
+    color: var(--primary-accent);
+    background: #f0f9ff;
+}
+
+.menu-label {
+    padding: 10px 25px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.list-group-item {
+    border: none;
+    padding: 12px 25px;
+    color: #475569;
+    font-weight: 500;
+    background: transparent;
+    margin: 4px 15px;
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.list-group-item i {
+    width: 25px;
+    font-size: 1.1rem;
+    color: #94a3b8;
+}
+
+.list-group-item:hover {
+    background-color: #f1f5f9;
+    color: var(--primary-accent);
+}
+
+.list-group-item.active {
+    background: linear-gradient(135deg, var(--primary-accent), var(--primary-dark));
+    color: white;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+
+.list-group-item.active i { color: white; }
+
+/* Content wrapper starts after the sidebar */
+#page-content-wrapper {
+    width: 100%;
+    margin-right: var(--sidebar-width); /* Default offset */
+    transition: margin 0.3s ease-in-out;
+}
+.navbar-glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.search-input {
+    background: #e0f2fe; /* Light sky blue background */
+    border: none;
+    border-radius: 50px;
+    padding: 0.6rem 1.5rem;
+    width: 250px;
+    transition: 0.3s;
+}
+.search-input:focus {
+    background: #fff;
+    width: 300px;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+    outline: none;
+}
+
+/* Cards */
+.card-stylish {
+    border: none;
+    border-radius: var(--card-radius);
+    background: #fff;
+    box-shadow: var(--soft-shadow);
+    transition: transform 0.3s ease;
+}
+
+.card-stylish:hover { transform: translateY(-5px); }
+
+/* Stats Gradients (Sky Theme) */
+.bg-gradient-sky {
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    color: white;
+}
+.bg-gradient-indigo {
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    color: white;
+}
+.bg-gradient-cyan {
+    background: linear-gradient(135deg, #06b6d4, #22d3ee);
+    color: white;
+}
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Table */
+.table-custom td { padding: 15px 10px; font-weight: 500; vertical-align: middle; }
+.user-avatar { width: 42px; height: 42px; border-radius: 14px; object-fit: cover; }
+
+.badge-sky { background-color: #e0f2fe; color: #0369a1; }
+
+ /* Custom Sidebar-Inspired Styling */
+    .sidebar-style-input {
+        background-color: #f3f6f9 !important;
+        border: 1px solid #e1e8ef !important;
+        border-radius: 6px !important;
+        padding: 10px 15px;
+        color: #334155;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+
+    .sidebar-style-input:focus {
+        background-color: #fff !important;
+        border-color: #0097d7 !important;
+        box-shadow: 0 0 0 3px rgba(0, 151, 215, 0.1) !important;
+    }
+
+    .table-input {
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        font-size: 0.9rem;
+    }
+
+    .table-input:focus {
+        background-color: #fff;
+        border-color: #0097d7;
+        box-shadow: none;
+    }
+
+    .vitals-box {
+        background: #fff;
+        border: 1px solid #e1e8ef;
+        border-radius: 8px;
+        padding: 8px 12px;
+    }
+
+    .vitals-box label {
+        display: block;
+        font-size: 0.7rem;
+        color: #64748b;
+        font-weight: bold;
+        margin-bottom: 2px;
+    }
+
+    .vitals-box input,
+    .vitals-box select,
+    .vitals-box textarea {
+        width: 100%;
+        border: none;
+        outline: none;
+        font-weight: bold;
+        color: #0097d7;
+        font-size: 0.95rem;
+    }
+
+    .fw-600 { font-weight: 600; }
+    
+    /* Hover effect for medicine table */
+    #medTable tbody tr:hover {
+        background-color: #f8fbff;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    
+/* Mobile View (Below 992px) */
+@media (max-width: 992px) {
+    #sidebar-wrapper {
+        margin-right: calc(var(--sidebar-width) * -1); /* Hidden by default on mobile */
+    }
+    #page-content-wrapper {
+        margin-right: 0;
+    }
+    /* On mobile, toggled means "Show Sidebar" */
+    #wrapper.toggled #sidebar-wrapper {
+        margin-right: 0;
+    }
+}
+
+
+/* Elegant Table Styling */
+#prescription-add-table {
+    border-collapse: separate;
+    border-spacing: 0 8px; /* Creates a modern 'row-card' look */
+}
+
+#prescription-add-table thead th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border: none;
+    padding: 15px 10px;
+}
+
+#prescription-add-table tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    transition: all 0.2s ease;
+    border-radius: 12px;
+}
+
+#prescription-add-table tbody tr:hover {
+    transform: scale(1.005);
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.1);
+    z-index: 10;
+}
+
+#prescription-add-table td {
+    border: none;
+    padding: 12px 10px;
+    vertical-align: middle;
+}
+
+/* Rounded corners for the 'card' rows */
+#prescription-add-table tbody tr td:first-child { border-radius: 0 12px 12px 0; }
+#prescription-add-table tbody tr td:last-child { border-radius: 12px 0 0 12px; }
+
+/* Enhanced Row Inputs */
+.table-input {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+.table-input:focus {
+    background-color: #fff !important;
+    border-color: var(--primary-accent) !important;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15) !important;
+}
+
+/* Custom Row ID Badge */
+.row-id-badge {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e0f2fe;
+    color: var(--primary-dark);
+    font-weight: 700;
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
+
+/* Select2 Customization for Table */
+.select2-container--default .select2-selection--single {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    height: 40px !important;
+    border-radius: 8px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 38px !important;
+    padding-right: 15px !important;
+}
