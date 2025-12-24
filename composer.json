@@ -1,0 +1,13 @@
+{
+    "name": "mostafaazizolumee/olumee-clinic",
+    "type": "project",
+    "require": {
+        "wixel/gump": "^1.11"
+    },
+    "authors": [
+        {
+            "name": "Mostafa Aziz Olumee",
+            "email": "m.olumee@gmail.com"
+        }
+    ]
+}
