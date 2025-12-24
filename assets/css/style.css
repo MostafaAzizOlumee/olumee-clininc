@@ -122,6 +122,54 @@ body {
     box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
 }
 
+.bg-primary {
+  background: linear-gradient(135deg, var(--primary-accent), var(--primary-dark));
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.35);
+}
+
+.bg-secondary {
+  background: linear-gradient(135deg, #6c757d, #565e64);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.35);
+}
+
+.bg-success {
+  background: linear-gradient(135deg, #198754, #146c43);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(25, 135, 84, 0.35);
+}
+
+.bg-danger {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.35);
+}
+
+.bg-warning {
+  background: linear-gradient(135deg, #ffc107, #cc9a06);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.45);
+}
+
+.bg-info {
+  background: linear-gradient(135deg, #0dcaf0, #0aa2c0);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(13, 202, 240, 0.35);
+}
+
+.bg-light {
+  background: linear-gradient(135deg, #f8f9fa, #d3d4d5);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(248, 249, 250, 0.6);
+}
+
+.bg-dark {
+  background: linear-gradient(135deg, #212529, #1a1e21);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(33, 37, 41, 0.5);
+}
+
 .list-group-item.active i { color: white; }
 
 /* Content wrapper starts after the sidebar */

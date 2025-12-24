@@ -33,7 +33,7 @@
   /* ==========================
    * INITIAL LOAD
    * ========================== */
-  addRow(true);
+  addRow(false);
 
   /* ==========================
    * FUNCTIONS
@@ -128,7 +128,7 @@ function handleRowRemove(e) {
       placeholder: 'انتخاب دوا',
       minimumInputLength: 3,
       ajax: {
-        url: 'medicine-search.php',
+        url: 'ajax/medicine-search.php',
         type: 'POST',
         dataType: 'json',
         delay: 250,
@@ -152,8 +152,12 @@ function handleRowRemove(e) {
       setTimeout(() => $select.select2('open'), 0);
     }
     /* ON focus open the dropdown */
-    $select.on('select2:focus', function(){
-      $(this).select2('open');
+    const $container = $select.next('.select2-container');
+
+    $container.find('.select2-selection').on('focus', function () {
+      if (!$select.select2('isOpen')) {
+        $select.select2('open');
+      }
     });
 
     /* After medicine select focus medicine_total_usage input */
@@ -166,32 +170,41 @@ function handleRowRemove(e) {
       if (totalUsageInput) totalUsageInput.focus();
     });
   }
-function initUsageFormSelect(selector) {
-  const $select = $(selector);
-  if ($select.hasClass('select2-hidden-accessible')) return;
 
-  $select.select2({
-    language: 'fa',
-    dir: 'ltr',
-    placeholder: 'انتخاب',
-    width: '100%'
-  });
+  function initUsageFormSelect(selector) {
+    const $select = $(selector);
+    if ($select.hasClass('select2-hidden-accessible')) return;
 
-  const $container = $select.next('.select2');
+    $select.select2({
+      language: 'fa',
+      dir: 'ltr',
+      placeholder: 'انتخاب',
+      width: '100%'
+    });
 
-$container.find('.select2-selection').on('focus', function () {
-  $select.select2('open');
-});
+    const $container = $select.next('.select2');
 
-  // After usage form select → add new row
-  $select.on('select2:select', function () {
-    const row = this.closest('tr');
-    const isLastRow = row === appendArea.lastElementChild;
+    $container.find('.select2-selection').on('focus', function () {
+      $select.select2('open');
+    });
 
-    if (isLastRow) {
-      addRow(true);
-    }
-  });
-}
+    // After usage form select → add new row
+    $select.on('select2:select', function () {
+      const row = this.closest('tr');
+      const isLastRow = row === appendArea.lastElementChild;
+
+      if (isLastRow) {
+        addRow(true);
+      }
+    });
+  }
 
 })();
+
+
+// Submit Form when submit button is clicked
+window.addEventListener("DOMContentLoaded", ()=>{
+    document.querySelector("[name='submit_btn']").addEventListener("click", ()=>{
+        document.getElementById('prescriptionForm').submit();
+    });
+});

@@ -43,8 +43,15 @@ CREATE TABLE IF NOT EXISTS `clinic`.`prescription` (
   `patient_weight` VARCHAR(45) NULL,
   `doctor_diagnose` VARCHAR(345) NULL,
   `doctor_clinical_note` VARCHAR(350) NULL,
+  `patient_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  INDEX `fk_prescription_patient1_idx` (`patient_id` ASC) ,
+  CONSTRAINT `fk_prescription_patient1`
+    FOREIGN KEY (`patient_id`)
+    REFERENCES `clinic`.`patient` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
