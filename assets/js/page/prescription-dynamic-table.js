@@ -64,14 +64,14 @@
 
         <td>
           <input type="text"
-                 id="medicine_total_usage-${rowId}"
+                 id="medicine_total_usage-${rowId}" list="medicine-total-usage-options"
                  class="form-control dir-ltr table-input text-center"
                  name="medicine_total_usage[]"
                  placeholder="مثلا 30">
         </td>
 
         <td>
-          <input type="text"
+          <input type="text" list="medicine-usage-time-options"
                  id="medicine_usage_time-${rowId}"
                  class="form-control table-input dir-ltr text-center"
                  name="medicine_usage_time[]"
@@ -202,12 +202,95 @@ function handleRowRemove(e) {
     });
   }
 
-})();
+// Change Focus to Next Input on Enter Key Press
+document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
 
+    const form = document.getElementById('prescriptionForm');
+    const elements = Array.from(form.querySelectorAll('input, select, textarea, button'))
+                          .filter(el => !el.disabled && el.type !== 'hidden');
+
+    const index = elements.indexOf(e.target);
+    if (index === -1) return;
+
+    e.preventDefault(); // prevent form submission
+
+    const next = elements[index + 1];
+    if (!next) return;
+
+    if (next.tagName === 'SELECT' && $(next).hasClass('select2-hidden-accessible')) {
+        $(next).select2('open');
+    } else {
+        next.focus();
+    }
+});
 
 // Submit Form when submit button is clicked
 window.addEventListener("DOMContentLoaded", ()=>{
     document.querySelector("[name='submit_btn']").addEventListener("click", ()=>{
+      // Remove empty rows before submitting
+      const rows = appendArea.querySelectorAll('tr[data-row-id]');
+      rows.forEach(row => {
+        const inputs = row.querySelectorAll('input, select, textarea');
+        const isEmpty = Array.from(inputs).every(input => {
+          if (input.tagName === 'SELECT') {
+            return !input.value; // empty select
+          } else {
+            return !input.value.trim(); // empty input/textarea
+          }
+        });
+        if (isEmpty) row.remove();
+      });
       $('#prescriptionForm').submit();
     });
 });
+})();
+
+/* ====================
+* Handle Double Enter on Empty Select2 to Focus Submit Button
+* Focus Submit Button after pressing Enter twice on empty Select2
+* For better UX when filling the form using keyboard only
+===================*/
+let activeSelect2 = null;
+let lastEnterTime = 0;
+
+/**
+ * Track currently opened Select2
+ * This gives us the EXACT <select> instance
+ */
+$(document).on('select2:open', function (e) {
+    activeSelect2 = e.target; // original <select>
+});
+
+
+/**
+ * Detect double Enter inside Select2 search input
+ */
+$(document).on('keydown', '.select2-search__field', function (e) {
+    if (e.key !== 'Enter') return;
+
+    const now = Date.now();
+    const delta = now - lastEnterTime;
+    lastEnterTime = now;
+
+    if (!activeSelect2) return;
+
+    // Only medicine select2
+    if (!activeSelect2.id || !activeSelect2.id.startsWith('medicines_id-')) return;
+
+    // Double Enter within 400ms AND nothing selected
+    if (delta < 400 && !activeSelect2.value) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Close Select2
+        $(activeSelect2).select2('close');
+
+        // Focus submit button
+        const submitBtn = document.querySelector("[name='submit_btn']");
+        if (submitBtn) submitBtn.click();
+    }
+});
+
+
+

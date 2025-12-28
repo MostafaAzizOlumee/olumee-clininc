@@ -529,6 +529,9 @@ body {
 .btn-light:hover {
     background-color: #f1f5f9;
 }
+button:focus {
+    outline: 3px solid #0097d7;
+}
 
 /* Select2 Customization for Table */
 .select2-container--default .select2-selection--single {
