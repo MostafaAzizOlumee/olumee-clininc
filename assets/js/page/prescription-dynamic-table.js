@@ -64,6 +64,7 @@
 
         <td>
           <input type="text"
+                 id="medicine_total_usage-${rowId}"
                  class="form-control dir-ltr table-input text-center"
                  name="medicine_total_usage[]"
                  placeholder="مثلا 30">
@@ -71,6 +72,7 @@
 
         <td>
           <input type="text"
+                 id="medicine_usage_time-${rowId}"
                  class="form-control table-input dir-ltr text-center"
                  name="medicine_usage_time[]"
                  placeholder="1x3 مثلا">
@@ -88,6 +90,7 @@
 
         <td>
           <textarea rows="1"
+                    id="medicine_usage_note-${rowId}"
                     class="form-control dir-ltr table-input"
                     name="medicine_usage_note[]"
                     placeholder="..."></textarea>
@@ -205,6 +208,6 @@ function handleRowRemove(e) {
 // Submit Form when submit button is clicked
 window.addEventListener("DOMContentLoaded", ()=>{
     document.querySelector("[name='submit_btn']").addEventListener("click", ()=>{
-        document.getElementById('prescriptionForm').submit();
+      $('#prescriptionForm').submit();
     });
 });

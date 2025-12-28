@@ -2,5 +2,5 @@
 
 function generatePatientCode(): string
 {
-    return 'PT-' . date('YmdHis');
+    return 'PT-' . date('ymdHis');
 }

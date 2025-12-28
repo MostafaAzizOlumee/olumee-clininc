@@ -1,95 +1,106 @@
 <?php include 'bootstrap/init.php';
 $scripts = [
     '<script> const DRUG_USAGE_FORMS = ' . json_encode(array_keys(DRUG_USAGE_FORMS)) . ';</script>',
-    "<script src='assets/js/page/prescription-dynamic-table.js'></script>"
+    "<script src='assets/js/page/prescription-dynamic-table.js'></script>",
+    "<script src='assets/plugins/jquery-validation/jquery.validate.min.js'></script>",
+    "<script src='assets/js/page/validations/prescription-add-validation.js'></script>"
 ];
 
 if( $_SERVER['REQUEST_METHOD'] === "POST" ){
     
     
-    /* ===========================
-    * Model Containers
-    * =========================== */
-    $patientModel = new Patient;
-    $prescriptionModel = new Prescription;
-    $objPatientPrescription = new PatientPrescription;
-    $prescribedMedicineModel = new PrescribedMedicine;
+ //Server-Side Validation
+  require_once 'inc/validation/prescription-add-validation.php';
+  
+    // Validate required fields
+    if ($validated === true){
+        /* ===========================
+        * Model Containers
+        * =========================== */
+        $patientModel = new Patient;
+        $prescriptionModel = new Prescription;
+        $objPatientPrescription = new PatientPrescription;
+        $prescribedMedicineModel = new PrescribedMedicine;
 
-    /* ===========================
-    * Start Transaction
-    * =========================== */
-    $logs = [];
-    $objPatientPrescription->startTransaction();   
-    
-    /* ===========================
-    * (1) Insert Patient
-    * =========================== */
-    $logs[] = $patientModel->add([
-        'code'        => isset($_POST['patient_code']) ? $_POST['patient_code'] : generatePatientCode(),
-        'first_name'  => $_POST['first_name'],
-        'father_name' => $_POST['father_name'] ?? null,
-        'last_name'   => $_POST['last_name'] ?? null,
-        'age'         => $_POST['age'] ?? null,
-    ]);
-    $patientId = $patientModel->lastInsertId();
-    if (!$patientId) {
-        $logs[] = false;
-    }
-    
-    /* ===========================
-    * (2) Insert Prescription
-    * =========================== */
-    $logs[] = $prescriptionModel->add([
-        'patient_cc'           => $_POST['cc'] ?? null,
-        'patient_past_history' => $_POST['past_history'] ?? null,
-        'patient_pb'           => $_POST['bp'] ?? null,
-        'patient_pr'           => $_POST['pr'] ?? null,
-        'patient_rr'           => $_POST['rr'] ?? null,
-        'patient_weight'       => $_POST['weight'] ?? null,
-        'doctor_diagnose'      => $_POST['diagnosis'] ?? null,
-        'doctor_clinical_note' => $_POST['clinical_notes'] ?? null,
-        'patient_id'           => $patientId,
-    ]);
-
-    $prescriptionId = $prescriptionModel->lastInsertId();
-
-    if (!$prescriptionId) {
-        $logs[] = false;
-    }
-
-    /* ===========================
-    * (3) Insert Prescribed Medicines
-    * =========================== */
-    if (!empty($_POST['medicines_id']) && is_array($_POST['medicines_id'])) {
-
-        foreach ($_POST['medicines_id'] as $i => $medicineId) {
-
-            if (empty($medicineId)) {
-                continue;
-            }
-
-            $logs[] = $prescribedMedicineModel->add([
-                'medicine_id'               => $medicineId,
-                'medicine_total_usage'      => $_POST['medicine_total_usage'][$i],
-                'medicine_usage_frequency'  => $_POST['medicine_usage_time'][$i],
-                'medicine_usage_form'       => $_POST['medicine_usage_form'][$i],
-                'medicine_doctor_note'      => $_POST['medicine_usage_note'][$i] ?? '',
-                'prescription_id'           => $prescriptionId,
-            ]);
+        /* ===========================
+        * Start Transaction
+        * =========================== */
+        $logs = [];
+        $objPatientPrescription->startTransaction();   
+        
+        /* ===========================
+        * (1) Insert Patient
+        * =========================== */
+        $logs[] = $patientModel->add([
+            'code'        => (isset($_POST['patient_code']) && !empty($_POST['patient_code'])) ? $_POST['patient_code'] : generatePatientCode(),
+            'first_name'  => $_POST['first_name'],
+            'father_name' => $_POST['father_name'] ?? null,
+            'last_name'   => $_POST['last_name'] ?? null,
+            'age'         => $_POST['age'] ?? null,
+        ]);
+        
+        $patientId = $patientModel->lastInsertId();
+        if (!$patientId) {
+            $logs[] = false;
         }
-    }else{       
-        $logs[] = false;
-    }
-    $logs[] =false;
-    /* ===========================
-    * Commit / Rollback
-    * =========================== */
-    if ($patientModel->endTransaction($logs)) {
-        header("Location: prescription-print-a4.php?PID={$prescriptionId}");
-        exit;
+        
+        /* ===========================
+        * (2) Insert Prescription
+        * =========================== */
+        $logs[] = $prescriptionModel->add([
+            'patient_cc'           => $_POST['cc'] ?? null,
+            'patient_past_history' => $_POST['past_history'] ?? null,
+            'patient_pb'           => $_POST['bp'] ?? null,
+            'patient_pr'           => $_POST['pr'] ?? null,
+            'patient_rr'           => $_POST['rr'] ?? null,
+            'patient_weight'       => $_POST['weight'] ?? null,
+            'doctor_diagnose'      => $_POST['diagnosis'] ?? null,
+            'doctor_clinical_note' => $_POST['clinical_notes'] ?? null,
+            'patient_id'           => $patientId,
+        ]);
+
+        $prescriptionId = $prescriptionModel->lastInsertId();
+
+        if (!$prescriptionId) {
+            $logs[] = false;
+        }
+
+        /* ===========================
+        * (3) Insert Prescribed Medicines
+        * =========================== */
+        if (!empty($_POST['medicines_id']) && is_array($_POST['medicines_id'])) {
+
+            foreach ($_POST['medicines_id'] as $i => $medicineId) {
+
+                if (empty($medicineId)) {
+                    continue;
+                }
+
+                $logs[] = $prescribedMedicineModel->add([
+                    'medicine_id'               => $medicineId,
+                    'medicine_total_usage'      => $_POST['medicine_total_usage'][$i],
+                    'medicine_usage_frequency'  => $_POST['medicine_usage_time'][$i],
+                    'medicine_usage_form'       => $_POST['medicine_usage_form'][$i],
+                    'medicine_doctor_note'      => $_POST['medicine_usage_note'][$i] ?? '',
+                    'prescription_id'           => $prescriptionId,
+                ]);
+            }
+        }else{       
+            $logs[] = false;
+        }
+        
+        /* ===========================
+        * Commit / Rollback
+        * =========================== */
+        if ($patientModel->endTransaction($logs)) {
+            header("Location: prescription-print-a4.php?PID={$prescriptionId}");
+            exit;
+        } else {
+            header("Location: prescription-add.php?msg=error");
+            exit;
+        }
     } else {
-        header("Location: prescription-add.php?msg=error");
-        exit;
+        $validation_msgs = array_merge($validation_msgs, $validated );
     }
 }
 ?>
@@ -115,6 +126,16 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     <?php endif; ?>
+                    <?php if (isset($validation_msgs)): ?>
+                        <div class="alert alert-warning">
+                        <h4 class="alert-heading h5">خطای اعتبار سنجی اطلاعات</h4>
+                        <ul>
+                        <?php foreach ($validation_msgs as $msg): ?>
+                            <li><?= $msg ?></li>
+                        <?php endforeach; ?>
+                        </ul>
+                        </div>
+                    <?php endif; ?>
                 </div><!-- col-6 -->
             </div><!-- row -->
             <div class="row mt-4">
@@ -131,33 +152,37 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                         </div>
                                         <div class="row g-3">
                                             <div class="col-md-3">
-                                                <label class="small text-muted mb-1">کد بیمار</label>
-                                                <input type="text" name="patient_code" class="form-control sidebar-style-input" placeholder="PT-0000">
-                                            </div>
-                                            <div class="col-md-3">
                                                 <label class="small text-muted mb-1">نام بیمار</label>
                                                 <input type="text" autofocus name="first_name" class="form-control sidebar-style-input">
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label class="small text-muted mb-1">نام پدر</label>
                                                 <input type="text" name="father_name" class="form-control sidebar-style-input">
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label class="small text-muted mb-1">تخلص</label>
                                                 <input type="text" name="last_name" class="form-control sidebar-style-input">
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label class="small text-muted mb-1">سن</label>
                                                 <input type="number" name="age" class="form-control sidebar-style-input">
                                             </div>
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <label class="small fw-bold text-muted mb-2">شکایت اصلی بیمار (CC)</label>
                                                 <textarea name="cc" class="form-control sidebar-style-input" rows="2" style="height: 100px;"></textarea>
-                                            </div>
-                                            <div class="col-md-6">
+                                            </div> -->
+                                            <!-- <div class="col-md-6">
                                                 <label class="small fw-bold text-muted mb-2">تاریخچه قبلی (Past History)</label>
                                                 <textarea name="past_history" class="form-control sidebar-style-input" rows="2" style="height: 100px;"></textarea>
-                                            </div>
+                                            </div> -->
+                                            <!-- <div class="col-12">
+
+                                                <div class="diagnosis-container p-3" style="background: rgba(0, 151, 215, 0.03); border: 1px dashed #0097d7; border-radius: 8px;">
+                                                    <label class="fw-bold text-dark small mb-2"><i class="fas fa-stethoscope ms-1" style="color:#0097d7;"></i> تشخیص</label>
+                                                    <textarea type="text" name="diagnosis" class="form-control border-0 bg-transparent fs-6 fw-bold text-dark shadow-none p-0" placeholder="تایپ کنید..."></textarea>
+                                                </div>
+                                            </div> -->
+                                            <!-- col-12 -->
                                         </div>
                                     </div>
                                 </div>
@@ -228,33 +253,21 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                 </div>
                             </div><!-- col-lg-9 -->
                              <div class="col-lg-3">
-                                <div class="card border-0 shadow-sm mb-4" style="border-radius: 10px;">
-                                    <div class="card-body p-4">
-                                        <div class="row g-4">
-                                            <div class="col-md-12">
-                                                <div class="diagnosis-container p-3" style="background: rgba(0, 151, 215, 0.03); border: 1px dashed #0097d7; border-radius: 8px;">
-                                                    <label class="fw-bold text-dark small mb-2"><i class="fas fa-stethoscope ms-1" style="color:#0097d7;"></i> تشخیص</label>
-                                                    <textarea type="text" name="diagnosis" class="form-control border-0 bg-transparent fs-6 fw-bold text-dark shadow-none p-0" placeholder="تایپ کنید..."></textarea>
-                                                </div>
-                                            </div>
-                                        </div><!-- row -->
-                                    </div><!-- card-body -->
-                                </div><!-- card -->
-                                <div class="card border-0 shadow-sm mb-5" style="border-radius: 10px;">
+                                <!-- <div class="card border-0 shadow-sm mb-5" style="border-radius: 10px;">
                                     <div class="card-body p-4">
                                         <div class="diagnosis-container p-3" style="background: rgba(0, 151, 215, 0.03); border: 1px dashed #0097d7; border-radius: 8px;">
                                             <label class="fw-bold text-muted small mb-3"><i class="fas fa-comment-medical ms-1"></i> یادداشت‌ها</label>
-                                            <textarea name="clinical_notes" class="form-control border-0 bg-transparent fs-6 fw-bold text-dark shadow-none p-0" rows="3" placeholder="توصیه های داکتر..."></textarea>
+                                            <textarea name="clinical_notes" rows="7" class="form-control border-0 bg-transparent fs-6 fw-bold text-dark shadow-none p-0" placeholder="توصیه های داکتر..."></textarea>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div><!-- col-lg-4 -->
                         </div><!-- row -->
                         
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="d-flex gap-2">
                                 <button type="button" name="submit_btn" class="btn text-white px-4 fw-600" style="background-color: #0097d7; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 151, 215, 0.25);">
-                                    <i class="fas fa-check-circle ms-2"></i>ثبت و تایید نهایی
+                                    ثبت نسخه
                                 </button>
                             </div><!-- d-flex -->
                         </div><!-- d-flex -->

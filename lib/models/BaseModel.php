@@ -2,7 +2,7 @@
 
 abstract class BaseModel{
 
-    protected $tbl = 'patients_treated_by_doctors';
+    protected $tbl;
 
     public function get($columns, $conditions, $current_page = '', $records_per_page = '') {
 
