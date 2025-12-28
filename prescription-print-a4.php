@@ -164,14 +164,8 @@
         </footer>
     </div><!-- prescription-sheet -->
 
-    <button class="btn-print" onclick="window.print()">Print A4/A5 پرنت</button>
-    <!-- <a class="btn btn-primary btn-back" href="prescription-add.php">بازگشت </a> -->
-    <script>
-        // Print trigger
-        window.onload = function() {
-            window.print();
-            window.location.href = "prescription-add.php";
-        }
-    </script>
+    <button class="btn-print" autofocus onclick="window.print()">Print A4/A5 پرنت</button>
+
+    <a class="btn btn-primary btn-back" href="prescription-add.php">بازگشت </a>
 </body>
 </html>

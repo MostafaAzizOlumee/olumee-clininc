@@ -199,7 +199,13 @@ body {
 }
 
 .btn-back {
+    text-decoration: none;
     position: fixed; bottom: 30px; left: 30px;
     padding: 12px 25px; background: var(--primary); color: white;
     border: none; border-radius: 6px; cursor: pointer; font-weight: bold;
+}
+
+.btn-back::before {
+    content: " \2190 ";
+    margin-right: 10px;
 }

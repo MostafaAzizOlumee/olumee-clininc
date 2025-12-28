@@ -215,8 +215,13 @@ document.addEventListener('keydown', function(e) {
 
     e.preventDefault(); // prevent form submission
 
-    const next = elements[index + 1];
+    let next = elements[index + 1];
     if (!next) return;
+    /* Skip these elements */
+    if(next.id === 'add-row'){
+      next = elements[index + 2];
+    } 
+      
 
     if (next.tagName === 'SELECT' && $(next).hasClass('select2-hidden-accessible')) {
         $(next).select2('open');
