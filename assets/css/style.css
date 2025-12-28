@@ -7,7 +7,6 @@
     --primary-accent: #0ea5e9; /* Sky Blue */
     --primary-dark: #0284c7;
     --secondary-accent: #38bdf8; 
-    
     --text-dark: #0f172a;
     --text-muted: #64748b;
     --card-radius: 20px;
@@ -21,7 +20,25 @@ body {
     color: var(--text-dark);
     overflow-x: hidden;
 }
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--primary-accent);
+    --bs-btn-border-color: var(--primary-accent);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--primary-dark);
+    --bs-btn-hover-border-color: var(--primary-dark);
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #0a58ca;
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
 
+.dir-ltr { direction: ltr !important; }
+.dir-rtl { direction: rtl !important; }
 /* --- Sidebar --- */
 #wrapper { display: flex; width: 100%; transition: all 0.3s ease; }
 
@@ -383,16 +400,134 @@ body {
 
 /* Custom Row ID Badge */
 .row-id-badge {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: #e0f2fe;
     color: var(--primary-dark);
     font-weight: 700;
+    padding: 4px 10px;
     border-radius: 8px;
     font-size: 0.8rem;
+}
+
+
+/* Table Styles for List */
+#prescription-list-table {
+    border-collapse: separate;
+    border-spacing: 0 12px; /* Spacing between rows */
+}
+
+#prescription-list-table tbody tr {
+    background-color: #ffffff;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    transition: all 0.2s ease;
+    border-radius: 12px;
+}
+
+#prescription-list-table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.1);
+}
+
+#prescription-list-table td {
+    border: none;
+    padding: 15px 10px;
+}
+
+/* Rounded corners for the 'card' rows */
+#prescription-list-table tbody tr td:first-child { 
+    border-radius: 0 12px 12px 0; 
+    padding-right: 20px;
+}
+#prescription-list-table tbody tr td:last-child { 
+    border-radius: 12px 0 0 12px; 
+    padding-left: 20px;
+}
+
+/* Badge for diagnosis */
+.badge-sky {
+    background-color: #f0f9ff;
+    color: #0369a1;
+    border: 1px solid #e0f2fe;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+/* Smart Search Wrapper */
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-pill {
+    background-color: #f8fafc !important;
+    border: 2px solid #edf2f7 !important;
+    border-radius: 50px !important;
+    padding: 12px 50px 12px 100px !important; /* Extra space for icon and button */
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.search-pill:focus {
+    background-color: #ffffff !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.15) !important;
+}
+
+.search-icon {
+    position: absolute;
+    right: 20px;
+    color: #94a3b8;
+    font-size: 1.1rem;
+}
+
+.search-btn {
+    position: absolute;
+    left: 8px;
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+
+.search-btn:hover {
+    background: #0284c7;
+    transform: scale(1.05);
+}
+
+/* Filter Chips */
+.filter-chip {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.2s ease;
+}
+
+.filter-chip:hover {
+    border-color: #0ea5e9;
+    color: #0ea5e9;
+    background: #f0f9ff;
+}
+
+.filter-chip.active {
+    background: #0ea5e9;
+    color: white;
+    border-color: #0ea5e9;
+    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
+}
+
+/* Action buttons */
+.btn-light {
+    background-color: #f8fafc;
+}
+.btn-light:hover {
+    background-color: #f1f5f9;
 }
 
 /* Select2 Customization for Table */

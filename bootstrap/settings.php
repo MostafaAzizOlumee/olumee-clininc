@@ -1,4 +1,8 @@
 <?php
+/* LIST PAGES SETTINGS */
+    define("ROWS_PER_PAGE", 10);
+    
+/* LIST PAGES SETTINGS */
 
 /* PRESCRIPTION SETTINGS */
  define('DRUG_USAGE_FORMS', [
