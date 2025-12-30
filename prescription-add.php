@@ -153,11 +153,11 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                     <span class="fw-bold small">معلومات عمومی بیمار</span>
                                                 </div>
                                                 <div class="row g-3">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <label class="small text-muted mb-1">نام بیمار</label>
                                                         <input type="text" autofocus name="first_name" class="form-control dir-ltr sidebar-style-input">
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <label class="small text-muted mb-1">نام پدر</label>
                                                         <input type="text" name="father_name" class="form-control dir-ltr sidebar-style-input">
                                                     </div>

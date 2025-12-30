@@ -28,6 +28,10 @@ body {
     
 }
 
+.text-capitalize {
+    text-transform: capitalize;
+}
+
 .rx-content{
     height: 100%;
 }

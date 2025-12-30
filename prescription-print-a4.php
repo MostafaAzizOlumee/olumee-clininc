@@ -57,7 +57,7 @@
         <section class="patient-grid">
             <div class="p-item">
                 <strong>NAME</strong>
-                <span class="fa-font">
+                <span class="fa-font text-capitalize">
                     <?= clean_data($prescription['first_name']) ?? ""?> 
                     <?= clean_data($prescription['father_name']) ?? ""?> 
                     <?= clean_data($prescription['last_name']) ?? ""?>
@@ -116,7 +116,7 @@
                     <tr>
                         <td><?= str_pad($counter++, 2, '0', STR_PAD_LEFT) ?></td>
                         <td>
-                            <strong>
+                            <strong class="text-capitalize">
                                 <?= clean_data($medicine['medicine_type']) ?>.
                                 <?= clean_data($medicine['generic_name']) ?>
                                 <?= clean_data($medicine['dose']) ?>
