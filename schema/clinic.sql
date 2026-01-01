@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `clinic`.`medicine` (
   `generic_name` VARCHAR(45) NOT NULL,
   `company_name` VARCHAR(45) NULL,
   `dose` VARCHAR(45) NULL,
+  `usage_description` VARCHAR(255) NULL,
   `is_deleted` TINYINT NULL DEFAULT 0,
   `medicine_type_id` INT UNSIGNED NOT NULL,
   `medicine_category_id` INT UNSIGNED NOT NULL,
