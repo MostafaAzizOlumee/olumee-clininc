@@ -42,13 +42,13 @@
             <div class="header-accent"></div>
 
             <div class="sig-en">
-                <h2>Abdul Aziz Olumee, MD</h2>
-                <p>Urology & Genital Surgery</p>
+                <h2>Professor Abdul Aziz Olumee</h2>
+                <p>Specialist in General Surgery and Urology</p>
             </div>
             <div class="sig-line"></div>
             <div class="sig-fa">
                 <img class="w-100" src="assets/imgs/prescription-print-fa-title.png" alt="doctor title">
-                <p class="fa-title">متخصص جراحی گرده، مثانه و تناسلی</p>
+                <p class="fa-title">متخصص جراحی عمومی و یورولوژی</p>
 
             </div><!-- sig-fa -->
         </header>

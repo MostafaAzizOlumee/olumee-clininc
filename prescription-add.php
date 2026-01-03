@@ -161,11 +161,11 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                         <label class="small text-muted mb-1">نام پدر</label>
                                                         <input type="text" name="father_name" class="form-control dir-ltr sidebar-style-input">
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <!-- <div class="col-md-6">
                                                         <label class="small text-muted mb-1">تخلص</label>
                                                         <input type="text" name="last_name" class="form-control dir-ltr sidebar-style-input">
-                                                    </div>
-                                                    <div class="col-md-6">
+                                                    </div> -->
+                                                    <div class="col-md-12">
                                                         <label class="small text-muted mb-1">سن</label>
                                                         <input type="number" name="age" class="form-control dir-ltr sidebar-style-input">
                                                     </div>
@@ -205,7 +205,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                             <input type="text" name="bp" placeholder="BP">
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 mb-2">
+                                                    <!-- <div class="col-6 mb-2">
                                                         <div class="vitals-box">
                                                             <label>نبض</label>
                                                             <input type="text" name="pr" placeholder="PR">
@@ -222,7 +222,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                             <label>وزن (kg)</label>
                                                             <input type="text" name="weight" placeholder="KG">
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>
