@@ -36,7 +36,7 @@
 <body>
 
     <div class="prescription-sheet">
-        <header class="signature-header">
+        <!-- <header class="signature-header">
             <div class="header-accent"></div>
 
             <div class="sig-en">
@@ -48,8 +48,8 @@
                 <img class="w-100" src="assets/imgs/doctor title.png" alt="doctor title">
                 <p class="fa-title">متخصص جراحی عمومی و یورولوژی</p>
 
-            </div><!-- sig-fa -->
-        </header>
+            </div>
+        </header> -->
 
 
         <section class="patient-grid">
@@ -98,15 +98,15 @@
                 
             <?php endif; ?>
 
-            <div class="rx-watermark">Rx</div>
+            <!-- <div class="rx-watermark">Rx</div> -->
 
             <table class="med-table">
                 <thead>
                     <tr>
                         <th width="5%">#</th>
                         <th width="55%">MEDICATION & STRENGTH</th>
-                        <th width="20%" class="text-center">QTY</th>
-                        <th width="20%" class="text-center">INSTRUCTIONS</th>
+                        <th width="10%" class="text-center">QTY</th>
+                        <th width="30%" class="text-center">INSTRUCTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,14 +121,14 @@
                                 <?= clean_data($medicine['generic_name']) ?>
                                 <?= clean_data($medicine['dose']) ?>
                             </strong>
-                            <p class="my-0 dir-rtl">
+                            <p class="my-0 dir-rtl fa-font">
                                 <small><?= clean_data($medicine['medicine_doctor_note']) ?></small>
                             </p>
                         </td>
                         <td class="text-center"><?= (int)$medicine['medicine_total_usage'] ?></td>
                         <td class="text-center">
                             <span class="badge-primary"><?= clean_data($medicine['medicine_usage_frequency']) ?></span> |
-                            <span class="badge-primary"><?= clean_data($medicine['medicine_usage_form']) ?></span>
+                            <span class="badge-primary"><?= clean_data($medicine['medicine_usage_form']) ?> <span class="fa-font">(<?= DRUG_USAGE_FORMS[$medicine['medicine_usage_form']] ?>)</span></span>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -145,7 +145,7 @@
                 <p class="fa-font"><?= nl2br(clean_data($prescription['doctor_clinical_note'])) ?></p>
             </div>
         </main>
-
+<!-- 
         <footer class="slim-footer">
             <div class="legal">
                 <div class="address">
@@ -161,7 +161,7 @@
                 <div class="sig-box"></div>
                 <p>Doctor's Signature</p>
             </div>
-        </footer>
+        </footer> -->
     </div><!-- prescription-sheet -->
 
     <button class="btn-print" autofocus onclick="window.print()">Print A4/A5 پرنت</button>
