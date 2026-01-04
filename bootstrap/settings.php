@@ -7,10 +7,11 @@
 /* PRESCRIPTION SETTINGS */
  define('DRUG_USAGE_FORMS', [
     'oral'          => 'خوراکی',
-    'sublingual'    => 'زیرزبانی',
-    'buccal'        => 'گونه‌ای',
     'iv'            => 'تزریقی ورید',
     'im'            => 'تزریقی عضله',
+    'gargle'        => 'غرغره',
+    'sublingual'    => 'زیرزبانی',
+    'buccal'        => 'گونه‌ای',
     'subcutaneous'  => 'تزریقی زیر پست',
     'intradermal'   => 'تزریقی داخل پست',
     'topical'       => 'موضعی',

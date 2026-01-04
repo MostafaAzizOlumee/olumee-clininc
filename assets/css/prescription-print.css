@@ -1,3 +1,59 @@
+/* --- Offline Font Definitions --- */
+
+/* Inter - Variable Font */
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+/* Playfair Display - Variable Font */
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('../fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('../fonts/Playfair_Display/PlayfairDisplay-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 900;
+    font-style: italic;
+}
+
+/* Katibeh */
+@font-face {
+    font-family: 'Katibeh';
+    src: url('../fonts/Katibeh/Katibeh-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Noto Naskh Arabic */
+@font-face {
+    font-family: 'Noto Naskh Arabic';
+    src: url('../fonts/Noto_Naskh_Arabic/static/NotoNaskhArabic-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Naskh Arabic';
+    src: url('../fonts/Noto_Naskh_Arabic/static/NotoNaskhArabic-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* -------------------------------- */
 
 :root {
 --primary: #1a365d; /* Deep Medical Navy */
@@ -68,7 +124,7 @@ body {
 }
 
 .sig-fa {
-    width: 200px;
+    width: 335px;
     justify-self: end;
     margin: 0;
     color: var(--primary);
@@ -80,7 +136,8 @@ body {
 .fa-title {
     font-family: 'Noto Naskh Arabic', serif;
     margin-top: -6px;
-    font-size: 12px;
+    font-size: 17px;
+    font-weight: 700;
     color: var(--accent);
     text-align: center;
 }
@@ -93,7 +150,7 @@ body {
 
 .sig-en h2 {
     font-family: 'Satoshi', sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     margin: 0;
 }
 

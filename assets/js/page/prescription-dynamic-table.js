@@ -19,7 +19,7 @@
       if (USAGE_FORMS.hasOwnProperty(key)) {
         var label = USAGE_FORMS[key];
         USAGE_FORM_OPTIONS +=
-          '<option value="' + label + '">' + label + '</option>';
+          '<option value="' + key + '">' +  key + '(' + label + ')</option>';
       }
     }
   const addRowBtn = document.getElementById('add-row');
@@ -54,13 +54,16 @@
         <td class="ps-4">
             <span class="row-id-badge">${rowId}</span>
         </td>
-        <td>
-          <select
-            class="form-control dir-ltr select2 dynamic table-input"
-            id="medicines_id-${rowId}"
-            name="medicines_id[]">
-          </select>
-        </td>
+       <td>
+  <div class="medicine-select-wrapper">
+      <select
+        class="form-control dir-ltr select2 dynamic table-input"
+        id="medicines_id-${rowId}"
+        name="medicines_id[]"
+        style="width: 100%"> 
+      </select>
+  </div>
+</td>
 
         <td>
           <input type="text"
@@ -91,7 +94,7 @@
         <td>
           <textarea rows="1"
                     id="medicine_usage_note-${rowId}"
-                    class="form-control dir-ltr table-input"
+                    class="form-control dir-rtl table-input"
                     name="medicine_usage_note[]"
                     placeholder="..."></textarea>
         </td>
@@ -130,7 +133,9 @@ function handleRowRemove(e) {
       dir: 'ltr',
       placeholder: 'انتخاب دوا',
       minimumInputLength: 3,
-      ajax: {
+      dropdownParent: $('body'), // CRITICAL: This allows the dropdown to float over everything
+      width: '100%',
+      ajax:{
         url: 'ajax/medicine-search.php',
         type: 'POST',
         dataType: 'json',
@@ -145,7 +150,7 @@ function handleRowRemove(e) {
             ...item,
             text:
               item.text ||
-              `${item.type} | ${item.generic_name} (${item.company_name}) ${item.dose}`
+              `${item.type} | ${item.company_name} (${item.generic_name})  ${item.dose}`
           }))
         })
       }
@@ -163,9 +168,26 @@ function handleRowRemove(e) {
       }
     });
 
-    /* After medicine select focus medicine_total_usage input */
-    $select.on('select2:select', function () {
+      /* After medicine select focus medicine_total_usage input */
+    $select.on('select2:select', function (e) {
+      const data = e.params.data; // ← FULL selected object
       const row = this.closest('tr');
+
+      if (!row || !data) return;
+
+      // 1. Set usage note from response
+      const usageNoteInput = row.querySelector(
+        'textarea[name="medicine_usage_note[]"]'
+      );
+
+      if (usageNoteInput && data.usage_description) {
+        usageNoteInput.value = data.usage_description;
+      }else{
+        usageNoteInput.value = '';
+
+      }
+
+      // 2. Focus next logical input
       const totalUsageInput = row.querySelector(
         'input[name="medicine_total_usage[]"]'
       );

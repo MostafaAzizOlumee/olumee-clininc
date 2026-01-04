@@ -31,8 +31,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Dr. Olumee | Professional Prescription</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Katibeh&family=Noto+Naskh+Arabic:wght@400;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/prescription-print.css">
 </head>
 <body>
@@ -47,7 +45,7 @@
             </div>
             <div class="sig-line"></div>
             <div class="sig-fa">
-                <img class="w-100" src="assets/imgs/prescription-print-fa-title.png" alt="doctor title">
+                <img class="w-100" src="assets/imgs/doctor title.png" alt="doctor title">
                 <p class="fa-title">متخصص جراحی عمومی و یورولوژی</p>
 
             </div><!-- sig-fa -->
@@ -91,9 +89,11 @@
                             <div class="v-cell">RR <span><?= clean_data($prescription['patient_rr']) ?>/min</span></div>
                         <?php endif; ?>
                     </div>
+                    <?php if (!empty($prescription['doctor_diagnose'])): ?>
                     <div class="diagnose-strip">
                         <div class="v-cell font-weight-normal">DIAGNOSE <span><?= nl2br(clean_data($prescription['doctor_diagnose'])) ?></span></div>
                     </div><!-- vitals-strip -->
+                    <?php endif; ?>
                 </div><!-- vital-and-diagnose -->
                 
             <?php endif; ?>

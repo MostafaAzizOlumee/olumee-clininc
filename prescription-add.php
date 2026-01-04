@@ -1,6 +1,6 @@
 <?php include 'bootstrap/init.php';
 $scripts = [
-    '<script> const DRUG_USAGE_FORMS = ' . json_encode(array_keys(DRUG_USAGE_FORMS)) . ';</script>',
+    '<script> const DRUG_USAGE_FORMS = ' . json_encode(DRUG_USAGE_FORMS) . ';</script>',
     "<script src='assets/js/page/prescription-dynamic-table.js'></script>",
     "<script src='assets/plugins/jquery-validation/jquery.validate.min.js'></script>",
     "<script src='assets/js/page/validations/prescription-add-validation.js'></script>"
@@ -114,8 +114,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
         <div class="container-fluid px-4 py-4">
             <div class="row" style="border-right: 5px solid #0097d7; padding-right: 15px;">
                 <div class="col-12">
-                    <h3 class="fw-bold mb-0" style="color: #0097d7;">نسخه الکترونیک</h3>
-                    <p class="text-muted small mb-0">ایجاد و مدیریت تجویزات طبی</p>
+                    <h5 class="fw-bold mb-0" style="color: #0097d7;">نسخه الکترونیک</h5>
                 </div><!-- col-12 -->
             </div><!-- row -->
             <div class="row">
@@ -142,7 +141,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                 <div class="col-12">
                     <form id="prescriptionForm" method="POST">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="row g-4 mb-4">
                                     <div class="col-md-12">
                                         <div class="card border-0 shadow-sm" style="border-radius: 10px;">
@@ -199,7 +198,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                     <span class="fw-bold small">علایم حیاتی (Vitals)</span>
                                                 </div>
                                                 <div class="row g-2">
-                                                    <div class="col-6 mb-2">
+                                                    <div class="col-12 mb-2">
                                                         <div class="vitals-box">
                                                             <label>فشار خون</label>
                                                             <input type="text" name="bp" placeholder="BP">
@@ -241,13 +240,12 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                     </div><!-- col-lg-3 -->
                                 </div><!-- row -->
                             </div><!-- col-md-3 -->
-                            <div class="col-md-9">
+                            <div class="col-md-10">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 px-0">
                                         <div class="card border-0 shadow-sm mb-4" style="border-radius: 10px; overflow: hidden;">
                                             <div class="card-header bg-white px-4 pt-4 border-0 d-flex justify-content-between align-items-center">
                                                 <h6 class="mb-0 fw-bold"><i class="fas fa-pills ms-2 text-info"></i>لیست اقلام ادویه</h6>
-                                                <button type="button" tabindex="-1" class="btn btn-sm btn-light border text-primary px-3" id="add-row">+ سطر جدید</button>
                                             </div>
                                             <div class="table-responsive px-2">
                                                 <table class="table" id="prescription-add-table">
@@ -259,7 +257,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                             <th class="text-center">زمان استفاده</th>
                                                             <th>طریق استفاده</th>
                                                             <th>ملاحظات اضافی</th>
-                                                            <th class="text-center pe-4">عملیات</th>
+                                                            <th class="text-center pe-4" style="width: 10%;">عملیات</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="append-area">
@@ -285,6 +283,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                      </datalist>
                                                 </table>
                                             </div>
+                                                <button type="button" tabindex="-1" class="btn btn-sm btn-light border text-primary px-3" id="add-row">+ سطر جدید</button>
                                         </div><!-- card -->
                                     </div><!-- col-lg-12 -->
                                     <div class="col-lg-12">

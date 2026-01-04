@@ -15,7 +15,7 @@
 }
 
 body {
-    font-family: 'Tajawal', sans-serif;
+    font-family: 'calibri', sans-serif;
     background-color: var(--main-bg);
     color: var(--text-dark);
     overflow-x: hidden;
@@ -337,8 +337,8 @@ body {
     }
 
     /* Scrollbar Styling */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar { width: 15px; }
+    ::-webkit-scrollbar-thumb { background: #5e9dea; border-radius: 10px; }
     
 /* Mobile View (Below 992px) */
 @media (max-width: 992px) {
@@ -385,7 +385,7 @@ body {
 
 #prescription-add-table td {
     border: none;
-    padding: 12px 10px;
+    padding: 12px 2px;
     vertical-align: middle;
 }
 
@@ -408,6 +408,48 @@ body {
     border-color: var(--primary-accent) !important;
     box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15) !important;
 }
+
+
+
+/* 1. Fix Select2 Dropdown Width & Depth */
+.select2-container--default .select2-results > .select2-results__options {
+    max-height: 350px; /* Give more vertical room */
+}
+
+/* Ensure the dropdown is at least as wide as the search input or wider */
+.select2-container--open .select2-dropdown--below {
+    min-width: 400px; /* Forces the dropdown to be wider than the narrow column */
+    border: 1px solid #0097d7;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 9999;
+}
+
+/* 2. Improve Table Layout for narrow columns */
+#prescription-add-table {
+    table-layout: fixed; /* Prevents columns from dancing around */
+    width: 100%;
+}
+
+/* Specific Column Widths */
+#prescription-add-table th:nth-child(2) { width: 35%; } /* Medicine name needs most space */
+#prescription-add-table th:nth-child(3) { width: 100px; } /* Total usage */
+#prescription-add-table th:nth-child(4) { width: 100px; } /* Usage time */
+
+/* 3. Highlighting the Active Row */
+#prescription-add-table tbody tr:focus-within {
+    background-color: #f0f9ff;
+    outline: 1px solid #0097d7;
+}
+
+/* 4. Select2 styling to match your 'table-input' look */
+.select2-container--default .select2-selection--single {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    height: 38px !important;
+    display: flex;
+    align-items: center;
+}
+
 
 /* Custom Row ID Badge */
 .row-id-badge {

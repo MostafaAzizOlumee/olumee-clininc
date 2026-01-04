@@ -9,8 +9,6 @@
     
     <link rel="stylesheet" href="assets/plugins/font-awesome/css/all.css">
     
-    <link href="assets/fonts/tajawal/tajawal.css" rel="stylesheet">
-    
     <!-- Select2 -->
     <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="assets/plugins/select2/css/select2-bootstrap4.min.css">
