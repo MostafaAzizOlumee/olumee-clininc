@@ -7,7 +7,7 @@
     
     // Prescription ID
     if (!isset($_GET['PID']) || empty($_GET['PID'])) {
-        header("Location: precription-list.php?msg=error"); die;
+        header("Location: prescription-list.php?msg=error"); die;
     }
     $prescriptionId = (int)$_GET['PID'];
     
@@ -15,14 +15,14 @@
     $prescription = $prescriptionModel->findFullPrescription($prescriptionId);
 
     if ( empty($prescription) ) {
-        header("Location: precription-list.php?msg=error"); die;
+        header("Location: prescription-list.php?msg=error"); die;
     }
 
     /* Fetch medicines */
     $medicinesResult = $medicineModel->getByPrescription($prescriptionId);
 
     if ( empty($medicinesResult) ) {
-        header("Location: precription-list.php?msg=error"); die;
+        header("Location: prescription-list.php?msg=error"); die;
     }
 
 ?>
@@ -134,16 +134,17 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?php if( isset($prescription['doctor_clinical_note']) && !empty($prescription['doctor_clinical_note']) ): ?>
+                <div class="notes-area dir-ltr" style="direction: rtl !important;">
+                    <label>Clinical Notes 
+                        <span class="fa-font">
+                            (یادداشت کلینیکی)
 
-            <div class="notes-area dir-ltr" style="direction: rtl !important;">
-                <label>Clinical Notes 
-                <span class="fa-font">
-                    (یادداشت کلینیکی)
-
-                </span>
-            </label>
-                <p class="fa-font"><?= nl2br(clean_data($prescription['doctor_clinical_note'])) ?></p>
-            </div>
+                        </span>
+                    </label>
+                    <p class="fa-font"><?= nl2br(clean_data($prescription['doctor_clinical_note'])) ?></p>
+                </div>
+            <?php endif; ?>
         </main>
 <!-- 
         <footer class="slim-footer">
@@ -164,8 +165,13 @@
         </footer> -->
     </div><!-- prescription-sheet -->
 
-    <button class="btn-print" autofocus onclick="window.print()">Print A4/A5 پرنت</button>
-
-    <a class="btn btn-primary btn-back" href="prescription-add.php">بازگشت </a>
+    <div class="right-btns">
+        <button class="btn btn-primary" autofocus onclick="window.print()">Print A4/A5 پرنت</button>
+    </div>
+    <div class="left-btns">
+        <a class="btn btn-primary btn-neon-glass" href="prescription-add.php">ثبت نسخه جدید </a>
+        <a class="btn btn-warning btn-edit" href="prescription-edit.php?PID=<?= $prescriptionId ?>">ویرایش نسخه فعلی </a>
+    </div>
+    
 </body>
 </html>

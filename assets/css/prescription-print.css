@@ -235,7 +235,7 @@ body {
 @media print {
     @page { size: A4; margin: 0; }
     body { background: transparent; }
-    .btn-print, .btn-back { display: none; }
+    .left-btns, .right-btns { display: none; }
     .prescription-sheet {
         box-shadow: none;
         width: 210mm;
@@ -243,20 +243,118 @@ body {
     }
 }
 
-.btn-print {
-    position: fixed; bottom: 30px; right: 30px;
-    padding: 12px 25px; background: var(--primary); color: white;
-    border: none; border-radius: 6px; cursor: pointer; font-weight: bold;
-}
-
-.btn-back {
-    text-decoration: none;
+.left-btns {
     position: fixed; bottom: 30px; left: 30px;
-    padding: 12px 25px; background: var(--primary); color: white;
+    padding: 12px 25px;
     border: none; border-radius: 6px; cursor: pointer; font-weight: bold;
 }
 
-.btn-back::before {
+.right-btns {
+    text-decoration: none;
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 12px 25px; 
+    border: none; border-radius: 6px; cursor: pointer; font-weight: bold;
+}
+
+.btn-edit::before {
     content: " \2190 ";
     margin-right: 10px;
+}
+
+
+/* Bootstrap minial styles */
+/* Base Bootstrap Structure */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.95rem;
+    border-radius: 5px; /* Pill shape from your image */
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+    gap: 8px; /* For icons */
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Primary - Sky Blue Gradient (Matches your uploaded image) */
+.btn-primary {
+    background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+    border-color: #0ea5e9;
+}
+
+/* Secondary - Deep Medical Navy (Matches your --primary variable) */
+.btn-secondary {
+    background: linear-gradient(90deg, #2a4365 0%, #1a365d 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(26, 54, 93, 0.2);
+    border-color: #1a365d;
+}
+
+/* Success - Soft Medical Green */
+.btn-success {
+    background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    border-color: #10b981;
+}
+
+/* Danger - Soft Medical Red */
+.btn-danger {
+    background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+}
+
+/* Info - Accent Blue (Matches your --accent variable) */
+.btn-info {
+    background: linear-gradient(90deg, #4299e1 0%, #3182ce 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
+    border-color: #3182ce;
+}
+
+/* Warning - Amber Gold */
+.btn-warning {
+    background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    border-color: #f59e0b;
+}
+
+/* Light / Outline Variant */
+.btn-light {
+    background: #ffffff;
+    color: #1a365d;
+    border-color: #e2e8f0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Sizing Classes */
+.btn-lg {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-sm {
+    padding: 0.35rem 1rem;
+    font-size: 0.85rem;
 }

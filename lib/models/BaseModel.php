@@ -29,6 +29,12 @@ abstract class BaseModel{
         return mysqli_query($GLOBALS['DB'], $query);
     }
 
+    public function delete($condition)
+    {
+        $query = QueryBuilder::delete($this->tbl, $condition);
+        return mysqli_query($GLOBALS['DB'], $query);
+    }
+    
     public function raw($rawQuery)  {
         $query = QueryBuilder::rawQuery($rawQuery);
         return mysqli_query($GLOBALS['DB'], $query);

@@ -85,4 +85,65 @@ class Prescription extends BaseModel{
 
         return $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
     }
+
+    public function getById(int $prescriptionId): array
+    {
+        $prescriptionId = (int)$prescriptionId;
+
+        $sql = "SELECT
+                p.id AS prescription_id,
+                p.created_at,
+                p.patient_cc,
+                p.patient_past_history,
+                p.patient_pb,
+                p.patient_pr,
+                p.patient_rr,
+                p.patient_weight,
+                p.doctor_diagnose,
+                p.doctor_clinical_note,
+
+                pt.id AS patient_id,
+                pt.code AS patient_code,
+                pt.first_name,
+                pt.father_name,
+                pt.last_name,
+                pt.age,
+
+                CONCAT(
+                    '[',
+                        GROUP_CONCAT(
+                            JSON_OBJECT(
+                                'prescribed_id', pm.id,
+                                'medicine_id', m.id,
+                                'generic_name', m.generic_name,
+                                'company_name', m.company_name,
+                                'dose', m.dose,
+                                'usage_description', m.usage_description,
+                                'medicine_type', mt.name,
+                                'medicine_category', mc.name,
+                                'total_usage', pm.medicine_total_usage,
+                                'usage_frequency', pm.medicine_usage_frequency,
+                                'usage_form', pm.medicine_usage_form,
+                                'doctor_note', pm.medicine_doctor_note
+                            )
+                            ORDER BY pm.id
+                        ),
+                    ']'
+                ) AS medicines
+
+            FROM prescription p
+            INNER JOIN patient pt ON pt.id = p.patient_id
+            LEFT JOIN prescribed_medicine pm ON pm.prescription_id = p.id
+            LEFT JOIN medicine m ON m.id = pm.medicine_id
+            LEFT JOIN medicine_type mt ON mt.id = m.medicine_type_id
+            LEFT JOIN medicine_category mc ON mc.id = m.medicine_category_id
+
+            WHERE p.id = $prescriptionId
+            GROUP BY p.id
+            LIMIT 1";
+
+        $result = $this->raw($sql);
+        return $result ? mysqli_fetch_assoc($result) : [];
+    }
+
 }

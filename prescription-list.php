@@ -155,7 +155,7 @@ $rowNumber  = ($currentPage - 1) * $perPage;
                                                         <i class="fas fa-print"></i>
                                                     </a>
     
-                                                    <a href="prescription-edit.php?id=<?= (int)$row['prescription_id'] ?>"
+                                                    <a href="prescription-edit.php?PID=<?= (int)$row['prescription_id'] ?>"
                                                     class="btn btn-sm btn-light border-0 text-warning">
                                                         <i class="fas fa-edit"></i>
                                                     </a>

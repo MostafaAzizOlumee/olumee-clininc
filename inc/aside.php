@@ -31,7 +31,7 @@
         </a>
         <div class="<?= (isThisRoute('medicine-add.php') || isThisRoute('medicine-list.php'))? '' : 'collapse' ?>" id="medicine">
             <div class="list-group list-group-flush pe-3">
-                <a href="medicine-add.php" class="list-group-item list-group-item-action <?= isThisRoute('medicine-add.php') ? 'active-menu' : '' ?> border-0 py-2">ثبت</a>
+                <a href="medicine-add.php" target="__blank" class="list-group-item list-group-item-action <?= isThisRoute('medicine-add.php') ? 'active-menu' : '' ?> border-0 py-2">ثبت</a>
                 <a href="medicine-list.php" class="list-group-item list-group-item-action <?= isThisRoute('medicine-list.php') ? 'active-menu' : '' ?> border-0 py-2">لیست</a>
             </div>
         </div>
