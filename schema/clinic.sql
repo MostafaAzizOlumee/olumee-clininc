@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `clinic`.`prescription` (
   `patient_id` INT UNSIGNED NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   INDEX `fk_prescription_patient1_idx` (`patient_id` ASC) ,

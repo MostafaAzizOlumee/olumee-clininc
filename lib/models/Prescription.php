@@ -28,7 +28,7 @@ class Prescription extends BaseModel{
         /* ===============================
          * WHERE Clause Builder
          * =============================== */
-        $where = "WHERE 1=1";
+        $where = "WHERE is_deleted=0";
 
         // ---- Search by patient code or name ----
         if ($search !== '') {

@@ -14,6 +14,14 @@ $rows = $prescriptionModel->getList([
 
 $rowNumber  = ($currentPage - 1) * $perPage;
 
+if (isset($_GET['delete'])) {
+    $prescriptionId = (int)$_GET['delete'];
+    if ($prescriptionModel->update(['is_deleted' => 1], 'id = ' . $prescriptionId)) {
+        header('Location: prescription-list.php?msg=success'); die;
+    } else {
+        header('Location: prescription-list.php?msg=error'); die;
+    }
+}
 ?>
 <?php include 'inc/head.php'; ?>
 
@@ -33,6 +41,21 @@ $rowNumber  = ($currentPage - 1) * $perPage;
                     <a href="prescription-add.php" class="btn text-white px-4 fw-600" style="background-color: #0097d7; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 151, 215, 0.25);">
                         <i class="fas fa-plus-circle ms-2"></i>ثبت نسخه جدید
                     </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <?php if (isset($_GET['msg']) && $_GET['msg'] === 'success'): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            عملیات با موفقیت انجام شد.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'error'): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            خطایی در انجام عملیات رخ داد. لطفاً دوباره تلاش کنید.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -160,7 +183,7 @@ $rowNumber  = ($currentPage - 1) * $perPage;
                                                         <i class="fas fa-edit"></i>
                                                     </a>
     
-                                                    <a href="prescription-delete.php?id=<?= (int)$row['prescription_id'] ?>"
+                                                    <a href="prescription-list.php?delete=<?= (int)$row['prescription_id'] ?>"
                                                     onclick="return confirm('آیا مطمئن هستید؟')"
                                                     class="btn btn-sm btn-light border-0 text-danger">
                                                         <i class="fas fa-trash-alt"></i>
