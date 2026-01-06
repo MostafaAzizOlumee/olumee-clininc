@@ -10,11 +10,10 @@ $prescriptionId = (int)$_GET['PID'];
 $objPrescription = new Prescription;
 
 $prescription = $objPrescription->getById( $prescriptionId );
-$medicinesJson = $prescription['medicines']; // Medicine JSON string
 
 $scripts = [
-    '<script> const DRUG_USAGE_FORMS = ' . json_encode(DRUG_USAGE_FORMS) . ';</script>',
-    '<script> const PRE_FILLED_MEDICINES = ' . $medicinesJson . ';</script>', // Pass data to JS
+    '<script> const DRUG_USAGE_FORMS = ' . json_encode(DRUG_USAGE_FORMS, JSON_UNESCAPED_UNICODE) . ';</script>',
+    '<script> const PRE_FILLED_MEDICINES = ' . json_encode($prescription['medicines'], JSON_UNESCAPED_UNICODE) . ';</script>',
     "<script src='assets/js/page/prescription-edit-dynamic-table.js'></script>",
     "<script src='assets/plugins/jquery-validation/jquery.validate.min.js'></script>",
     "<script src='assets/js/page/validations/prescription-add-validation.js'></script>"
@@ -103,7 +102,7 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
         } else {
             $logs[] = false;
         }
-
+        
         /* ===========================
         * Commit / Rollback
         * =========================== */

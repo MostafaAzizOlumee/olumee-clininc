@@ -87,63 +87,106 @@ class Prescription extends BaseModel{
     }
 
     public function getById(int $prescriptionId): array
-    {
-        $prescriptionId = (int)$prescriptionId;
+{
+    $prescriptionId = (int)$prescriptionId;
 
-        $sql = "SELECT
-                p.id AS prescription_id,
-                p.created_at,
-                p.patient_cc,
-                p.patient_past_history,
-                p.patient_pb,
-                p.patient_pr,
-                p.patient_rr,
-                p.patient_weight,
-                p.doctor_diagnose,
-                p.doctor_clinical_note,
+    $sql = "
+    SELECT
+        p.id AS prescription_id,
+        p.created_at,
+        p.patient_cc,
+        p.patient_past_history,
+        p.patient_pb,
+        p.patient_pr,
+        p.patient_rr,
+        p.patient_weight,
+        p.doctor_diagnose,
+        p.doctor_clinical_note,
 
-                pt.id AS patient_id,
-                pt.code AS patient_code,
-                pt.first_name,
-                pt.father_name,
-                pt.last_name,
-                pt.age,
+        pt.id AS patient_id,
+        pt.code AS patient_code,
+        pt.first_name,
+        pt.father_name,
+        pt.last_name,
+        pt.age,
 
-                CONCAT(
-                    '[',
-                        GROUP_CONCAT(
-                            JSON_OBJECT(
-                                'prescribed_id', pm.id,
-                                'medicine_id', m.id,
-                                'generic_name', m.generic_name,
-                                'company_name', m.company_name,
-                                'dose', m.dose,
-                                'usage_description', m.usage_description,
-                                'medicine_type', mt.name,
-                                'medicine_category', mc.name,
-                                'total_usage', pm.medicine_total_usage,
-                                'usage_frequency', pm.medicine_usage_frequency,
-                                'usage_form', pm.medicine_usage_form,
-                                'doctor_note', pm.medicine_doctor_note
-                            )
-                            ORDER BY pm.id
-                        ),
-                    ']'
-                ) AS medicines
+        pm.id AS prescribed_id,
+        m.id AS medicine_id,
+        m.generic_name,
+        m.company_name,
+        m.dose,
+        m.usage_description,
+        mt.name AS medicine_type,
+        mc.name AS medicine_category,
+        pm.medicine_total_usage,
+        pm.medicine_usage_frequency,
+        pm.medicine_usage_form,
+        pm.medicine_doctor_note
 
-            FROM prescription p
-            INNER JOIN patient pt ON pt.id = p.patient_id
-            LEFT JOIN prescribed_medicine pm ON pm.prescription_id = p.id
-            LEFT JOIN medicine m ON m.id = pm.medicine_id
-            LEFT JOIN medicine_type mt ON mt.id = m.medicine_type_id
-            LEFT JOIN medicine_category mc ON mc.id = m.medicine_category_id
+    FROM prescription p
+    INNER JOIN patient pt ON pt.id = p.patient_id
+    LEFT JOIN prescribed_medicine pm ON pm.prescription_id = p.id
+    LEFT JOIN medicine m ON m.id = pm.medicine_id
+    LEFT JOIN medicine_type mt ON mt.id = m.medicine_type_id
+    LEFT JOIN medicine_category mc ON mc.id = m.medicine_category_id
 
-            WHERE p.id = $prescriptionId
-            GROUP BY p.id
-            LIMIT 1";
+    WHERE p.id = $prescriptionId
+    ORDER BY pm.id
+    ";
 
-        $result = $this->raw($sql);
-        return $result ? mysqli_fetch_assoc($result) : [];
+    $result = $this->raw($sql);
+    if (!$result) return [];
+
+    $data = [];
+    $medicines = [];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        // Fill prescription data once
+        if (empty($data)) {
+            $data = [
+                'prescription_id'       => $row['prescription_id'],
+                'created_at'            => $row['created_at'],
+                'patient_cc'            => $row['patient_cc'],
+                'patient_past_history'  => $row['patient_past_history'],
+                'patient_pb'            => $row['patient_pb'],
+                'patient_pr'            => $row['patient_pr'],
+                'patient_rr'            => $row['patient_rr'],
+                'patient_weight'        => $row['patient_weight'],
+                'doctor_diagnose'       => $row['doctor_diagnose'],
+                'doctor_clinical_note'  => $row['doctor_clinical_note'],
+                'patient_id'            => $row['patient_id'],
+                'patient_code'          => $row['patient_code'],
+                'first_name'            => $row['first_name'],
+                'father_name'           => $row['father_name'],
+                'last_name'             => $row['last_name'],
+                'age'                   => $row['age'],
+                'medicines' => []
+            ];
+        }
+
+        // If a medicine exists, add it
+        if (!empty($row['prescribed_id'])) {
+            $medicines[] = [
+                'prescribed_id'    => $row['prescribed_id'],
+                'medicine_id'      => $row['medicine_id'],
+                'generic_name'     => $row['generic_name'],
+                'company_name'     => $row['company_name'],
+                'dose'             => $row['dose'],
+                'usage_description'=> $row['usage_description'],
+                'medicine_type'    => $row['medicine_type'],
+                'medicine_category'=> $row['medicine_category'],
+                'total_usage'      => $row['medicine_total_usage'],
+                'usage_frequency'  => $row['medicine_usage_frequency'],
+                'usage_form'       => $row['medicine_usage_form'],
+                'doctor_note'      => $row['medicine_doctor_note'],
+            ];
+        }
     }
+
+    $data['medicines'] = $medicines;
+    return $data;
+}
+
 
 }
