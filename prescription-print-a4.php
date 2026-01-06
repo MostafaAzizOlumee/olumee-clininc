@@ -122,7 +122,7 @@
                                 <?= clean_data($medicine['dose']) ?>
                             </strong>
                             <p class="my-0 dir-rtl fa-font">
-                                <small><?= clean_data($medicine['medicine_doctor_note']) ?></small>
+                                <?= clean_data($medicine['medicine_doctor_note']) ?>
                             </p>
                         </td>
                         <td class="text-center"><?= (int)$medicine['medicine_total_usage'] ?></td>

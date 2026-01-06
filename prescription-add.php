@@ -280,6 +280,8 @@ if( $_SERVER['REQUEST_METHOD'] === "POST" ){
                                                         <option>1x3</option>
                                                         <option>2x1</option>
                                                         <option>2x2</option>
+                                                        <option>هفته‌وار</option>
+                                                        <option>ماه‌وار</option>
                                                      </datalist>
                                                 </table>
                                             </div>
