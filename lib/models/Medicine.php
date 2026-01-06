@@ -18,12 +18,12 @@ class Medicine extends BaseModel{
 
   public function getList(array $params = []) {
     $columns = " `medicine`.*,  `medicine_category`.`name` as 'category', `medicine_type`.`name` as 'type' ";
-    $conditions = " `medicine`.is_deleted = '0' ";
+    $conditions = " `medicine`.is_deleted = 0 ";
 
     if (!empty($params['search'])) {
       $search = mysqli_real_escape_string($GLOBALS['DB'], $params['search']);
-      $conditions .= " AND CONCAT_WS(' ', `company_name`, `dose`, `generic_name`) LIKE '%$search%' OR 
-                           CONCAT_WS(' ', `generic_name`, `dose`, `company_name`) LIKE '%$search%'";
+      $conditions .= " AND (CONCAT_WS(' ', `company_name`, `dose`, `generic_name`) LIKE '%$search%' OR 
+                           CONCAT_WS(' ', `generic_name`, `dose`, `company_name`) LIKE '%$search%')";
     }
 
     $current_page = $params['page'] ?? '';
@@ -40,7 +40,7 @@ class Medicine extends BaseModel{
               LEFT JOIN `medicine_type` ON `medicine`.`medicine_type_id` = `medicine_type`.`id`
               WHERE $conditions
               " . (!empty($limit) ? "LIMIT $limit" : "");
-
+    
     $result = mysqli_query($GLOBALS['DB'], QueryBuilder::rawQuery($query));
     
     return $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];

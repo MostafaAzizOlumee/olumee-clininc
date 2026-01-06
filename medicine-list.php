@@ -14,6 +14,14 @@ $rows = $objMedicine->getList([
 
 $rowNumber  = ($currentPage - 1) * $perPage;
 
+if (isset($_GET['delete'])) {
+    $medicineId = (int)$_GET['delete'];
+    if ($objMedicine->update(['is_deleted' => 1], 'id = ' . $medicineId)) {
+        header('Location: medicine-list.php?msg=success'); die;
+    } else {
+        header('Location: medicine-list.php?msg=error'); die;
+    }
+}
 ?>
 <?php include 'inc/head.php'; ?>
 
@@ -32,6 +40,21 @@ $rowNumber  = ($currentPage - 1) * $perPage;
                     <a href="medicine-add.php" class="btn text-white px-4 fw-600" style="background-color: #0097d7; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 151, 215, 0.25);">
                         <i class="fas fa-plus-circle ms-2"></i>ثبت دوا جدید
                     </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <?php if (isset($_GET['msg']) && $_GET['msg'] === 'success'): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            عملیات با موفقیت انجام شد.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'error'): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            خطایی در انجام عملیات رخ داد. لطفاً دوباره تلاش کنید.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden;">
@@ -111,7 +134,7 @@ $rowNumber  = ($currentPage - 1) * $perPage;
                                                         <i class="fas fa-edit"></i>
                                                     </a>
     
-                                                    <a href="medicine-delete.php?id=<?= (int)$row['id'] ?>"
+                                                    <a href="medicine-list.php?delete=<?= (int)$row['id'] ?>"
                                                     onclick="return confirm('آیا مطمئن هستید؟')"
                                                     class="btn btn-sm btn-light border-0 text-danger">
                                                         <i class="fas fa-trash-alt"></i>
